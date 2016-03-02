@@ -1,0 +1,64 @@
+/*
+Error: Undefined variable: "$base-border-color".
+        on line 20 of css/_typography.scss
+
+15: $base-border-radius: 3px;
+16: $base-spacing: $base-line-height * 1em;
+17: $base-z-index: 0;
+18: 
+19: // Borders
+20: $base-border: 1px solid $base-border-color;
+21: 
+22: body {
+23: 	@include font-feature-settings("kern","liga","frac", "pnum");
+24: 	-webkit-font-smoothing: antialiased;
+25: 	text-rendering: optimizeLegibility; 
+
+Backtrace:
+css/_typography.scss:20
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/script/tree/variable.rb:49:in `_perform'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/script/tree/node.rb:50:in `perform'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/script/tree/list_literal.rb:63:in `block in _perform'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/script/tree/list_literal.rb:63:in `map'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/script/tree/list_literal.rb:63:in `_perform'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/script/tree/node.rb:50:in `perform'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:469:in `visit_variable'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/stack.rb:79:in `block in with_base'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/stack.rb:115:in `with_frame'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/stack.rb:79:in `with_base'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/base.rb:52:in `map'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:157:in `visit'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/root_node.rb:36:in `css_tree'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/engine.rb:378:in `_render_with_sourcemap'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/engine.rb:295:in `render_with_sourcemap'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:490:in `update_stylesheet'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:209:in `each'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/plugin/compiler.rb:293:in `watch'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/plugin.rb:109:in `method_missing'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/exec/sass_scss.rb:383:in `watch_or_update'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/exec/sass_scss.rb:51:in `process_result'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/exec/base.rb:52:in `parse'
+/Users/seratch/.gem/gems/sass-3.4.21/lib/sass/exec/base.rb:19:in `parse!'
+/Users/seratch/.gem/gems/sass-3.4.21/bin/sass:13:in `<top (required)>'
+/Users/seratch/.gem/bin/sass:23:in `load'
+/Users/seratch/.gem/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined variable: \"$base-border-color\".\A         on line 20 of css/_typography.scss\A \A 15: $base-border-radius: 3px;\A 16: $base-spacing: $base-line-height * 1em;\A 17: $base-z-index: 0;\A 18: \A 19: // Borders\A 20: $base-border: 1px solid $base-border-color;\A 21: \A 22: body {\A 23: 	@include font-feature-settings(\"kern\",\"liga\",\"frac\", \"pnum\");\A 24: 	-webkit-font-smoothing: antialiased;\A 25: 	text-rendering: optimizeLegibility; "; }
