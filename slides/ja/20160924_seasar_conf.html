@@ -47,39 +47,40 @@ Kazuhiro Sera (@seratch)
 ---
 ## SAStruts の移行先？
 
-- 普通に考えて Spring Boot、おそらく今日いる人のほとんどがそう
+- 普通に考えて [Spring Boot](https://projects.spring.io/spring-boot/)、おそらく今日いる人のほとんどがそうではないか
 
 - それは前提として Spring Boot もいいけど Scala もあるよという話です
 
 - これから Scala で|もやっていこうというのもそれはそれで良い選択
  - 現にヌーラボさんなど Scala へ移った S2 ユーザ企業も
+ - 微力ながらご支援もできます (good-flow.com)
 
 - 最近 Spring で話題の Reactive は Scala 発祥
- - 実務で使わないとしても追いかけてみてもよいかと
+ - 実務で使わないとしても追いかけてみてもよいのではないかと
 
 ---
 ## 手を動かしながらどうぞ
 
-- そろそろ話を聴いているだけは飽きてきた頃？
+そろそろ話を聴いているだけは飽きてきた頃？
 
-- 動かしてみてください
- - 以下実行して http://localhost:8080/ へアクセス
- - おなじみのアレが・・！
+デモアプリ、以下を実行して、動かしてみてください。
+
+http://localhost:8080/ にアクセスすると、懐かしいアレが・・！
 
 ```
 git clone https://github.com/seratch/sa-struts-to-skinny.git
 
 cd sa-struts-to-skinny/skinny-tutorial
-
 ./skinny run
 ```
 
-本家もすぐ起動できるようにしておきました (http://localhost:8081/)
+本家もすぐ起動できるようにしておきました。
 
 ```
 cd sa-struts-to-skinny/sa-struts-tutorial
-
 mvn jetty:run
+
+open http://localhost:8081/
 ```
 
 ---
@@ -100,21 +101,11 @@ mvn jetty:run
 
 - 私自身: S2 休止後は Rails、Jersey、Spring MVC などを使っていた
 
-- Scala: Play は Rails を目指したのではなく Rails っぽい見た目の別もの
-
----
-## Skinny
-
-- 非同期処理を前提としない Scala
-
-- Scala on Rails
- - 界隈にそれ**も**欲している人は少なくないように見えた
-
-- 2013 年秋頃着手し、2014 年春に Skinny 1.0 release
-
-- [コンセプトのドラフト文書](https://gist.github.com/seratch/7382298)
-
-- [Skinny Framework Meetup Tokyo 1](https://gist.github.com/seratch/b61f0ae71cb5b5aa5b78)
+- Scala での Web サーバサイド
+ - 一昔前は Lift が有名だった
+ - 2012 年 Java だった Play が突如 v2 から Scala になった
+ - Play 1 は Java on Rails だった
+ - Play 2 はある程度 Rails っぽい見た目の別もの
 
 ---
 ## Scala
@@ -125,13 +116,31 @@ mvn jetty:run
  - [公式サイト](http://scala-lang.org/)
 
 - 今年 [Scala Center](https://scala.epfl.ch/) 発足
- - 開発主体を一企業である Typesafe（現 Lightbend） から移した
- - IBM、Verizon、Goldman Sachs等の他の企業もスポンサードする体制に
+ - Lightbend（旧 Typesafe）と連携してエコシステムの拡大
+ - IBM、Verizon、Goldman Sachs等の他の企業もスポンサードする体制
 
 - 今では Twitter だけでなく多くの企業が使っている
  - http://www.lightbend.com/resources/case-studies-and-stories
  - Twitter、Walmart、Intel、SAMSUNG、LinkedIn、Coursera、The Guardian、Databricks、The Huffington Post、airbnb、etc..
- - [ドワンゴさんの新卒教育テキスト](https://dwango.github.io/scala_text/)
+ - ドワンゴさんでは[新卒教育で Scala エンジニアに](https://dwango.github.io/scala_text/)
+
+---
+## Skinny
+
+- 非同期処理を前提としない Scala
+ - 敷居を下げたい
+ - 全部を Scala らしく書くより Java のコードを流用したい
+
+- Scala on Rails
+ - 界隈にそれ**も**欲している人は少なくないように見えた
+ - 普通の CRUD 画面的なもの
+ - scaffold とかしたい
+
+- 2013 年秋頃着手し、2014 年春に Skinny 1.0 release
+
+- [コンセプトのドラフト文書](https://gist.github.com/seratch/7382298)
+
+- [Skinny Framework Meetup Tokyo 1](https://gist.github.com/seratch/b61f0ae71cb5b5aa5b78)
 
 ---
 class: center, middle
@@ -148,7 +157,7 @@ class: center, middle
 - Linux や Windows は zip 解凍で
 
 ---
-## Tips
+## Installation Tips
 
 - Eclipse は厳しいので IntelliJ IDEA を使うとよいです
  - https://www.jetbrains.com/idea/
@@ -189,7 +198,7 @@ http://localhost:8080/ にアクセスする
 
 IntelliJ IDEA ならプロジェクトのディレクトリを指定して開くだけ。
 
-Eclipse は・・IntelliJ 使ってみてください。
+Eclipse は・・これを機に IntelliJ 使ってみてください。
 
 Atom / emacs なら ENSIME の設定は以下をたたいて .ensime をつくるだけ。
 （ENSIME の sbt プラグインが必要）
@@ -276,8 +285,8 @@ skinny コマンドは sbt の薄いラッパーなので sbt と連携してい
 - Assets（CoffeeScript、LESS、Sass、Scala.js）
 - メール送信
 - 国際化対応
-- ORM、FactoryGirl（Fixture DSL）
-- 簡易的な job worker 機構
+- ORM、FactoryGirl（fixture DSL）
+- 簡易的な Job Worker 機構
 - rake 的なタスクランナー
 
 などがあります。Web MVC 部分以外は独立したライブラリになっているので Play アプリなどでも使えます。
@@ -285,12 +294,10 @@ skinny コマンドは sbt の薄いラッパーなので sbt と連携してい
 ---
 class: center, middle
 
-# Demo2: Revers Scaffolding
+# Demo2: Reverse Scaffolding
 
 ---
 ## Demo 2: Reverse Scaffolding
-
-[公式ドキュメント](http://skinny-framework.org/documentation/scaffolding.html#reverse-scaffold-generator)参照。
 
 すでに存在するデータベースからコードを自動生成できます。migration ファイルを規約に沿って生成。
 
@@ -298,7 +305,7 @@ class: center, middle
 ./skinny g migration reverse-demo
 ```
 
-DDL をコピーして migration ファイルに書き込みます。
+[DDL をコピー](http://skinny-framework.org/documentation/scaffolding.html#reverse-scaffold-generator)して migration ファイルに書き込みます。
 
 ```
 pbpaste > src/main/resources/db/migration/*__reverse-demo.sql
@@ -317,6 +324,23 @@ DB に DDL を反映します。
 
 git add . -v && git commit -m'Add reverse-scaffold demo'
 ```
+
+---
+## Demo 2: FK があればベター
+
+先ほどの公式ドキュメントの例のように外部キーが適切に指定された例であれば association の設定もついた状態で DAO が生成されます。
+
+- belongsTo, hasMany, hasManyThrough, hasOne ...
+
+ぜひ現実世界の DB に対して reverse scaffolding してみてください。
+
+以下は [Redmine](http://www.redmine.org/) の MySQL DB から生成した例です。
+
+- https://github.com/seratch/redmine-reverse-scaffold
+- https://github.com/seratch/redmine-reverse-scaffold/tree/master/src/main/scala/model
+
+一発でコンパイルが通って動作するコードが生成されます。
+
 
 ---
 ## Demo 2: REPL
@@ -380,40 +404,43 @@ Struts の client side validation と security-constraint だけスキップし�
 実装の内容は、このへんだけ見ればだいたいわかるようになっています。
 Scala 初見でも Java の方なら何となくわかるはず。
 
-- src/main/scala/controller/Controllers.scala
-- src/main/scala/controller/tutorial
+- [src/main/scala/controller/Controllers.scala](https://github.com/seratch/sa-struts-to-skinny/blob/master/skinny-tutorial/src/main/scala/controller/Controllers.scala)
+- [src/main/scala/controller/tutorial](https://github.com/seratch/sa-struts-to-skinny/tree/master/skinny-tutorial/src/main/scala/controller/tutorial)
 
-- src/main/scala/model
+- [src/main/scala/model](https://github.com/seratch/sa-struts-to-skinny/tree/master/skinny-tutorial/src/main/scala/model)
 
-- src/main/webapp/WEB-INF/layouts
-- src/main/webapp/WEB-INF/views/tutorial
+- [src/main/webapp/WEB-INF/layouts](https://github.com/seratch/sa-struts-to-skinny/tree/master/skinny-tutorial/src/main/webapp/WEB-INF/layouts)
+- [src/main/webapp/WEB-INF/views/tutorial](https://github.com/seratch/sa-struts-to-skinny/tree/master/skinny-tutorial/src/main/webapp/WEB-INF/views/tutorial)
 
 ---
 ## Demo 3: SAStruts Tutorial 雑感
 
-- sa.css すごくシンプルなんだけど、なんか味ありますよね
+- [sa.css](https://github.com/seratch/sa-struts-to-skinny/blob/master/skinny-tutorial/src/main/webapp/assets/css/sa.css) すごくシンプルなんだけど、なんか味ありますよね
 
 - SAStruts の良さ
- - Rails 的な mapItems[0].id みたいなパラメータのサポート
- - submit の name で規約 dispatch してくれていた
+ - Rails 的な `mapItems[0].id` みたいなパラメータのサポート
+ - submit ボタンの name パラメータの値で規約 dispatch
 
 - Scala との比較
- - Scala + Skinny の記述は基本的には Java より簡潔になる
- - Skinny は view 以外の変更はファイル変更検知で自動再起動、どうしても Hot reloading が欲しいなら Play で
+ - Scala + Skinny の場合、基本的に記述は Java より簡潔
+ - Scala はアノテーション文化ではない（Play は最近ちょっとある..）
+ - Skinny: view はすぐに反映、それ以外は変更検知での自動再起動
+ - どうしても Hot reloading が欲しいなら Play にはあります
 
-- 完コピできてない箇所見つけたら pull request ください・・！
+- tutorial 完コピできてない箇所あったら pull request ください・・！
 
 ---
 ## まとめ
 
-- Seasar プロジェクト、本当にお疲れ様でした
+- Seasar プロジェクト、本当にお疲れ様でした！
 
-- 私は、簡単ではないけれど、これからも世界でのユーザ増を頑張ります
- - OSS も SmartNews も
+- 私は今後も世界展開を目指して頑張ります
+ - OSS も SmartNews も！
 
 - Scala 実際触ってみると良さがわかる感じがあります
  - 興味を持った方はこの週末ぜひ試してみてください
- - Skinny でも Play でも！
+ - 最近は Apache Spark で始める人多いです
+ - Web なら Skinny でも Play でもお好きな方で
 
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
