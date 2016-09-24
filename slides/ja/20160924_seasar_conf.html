@@ -59,32 +59,47 @@ Kazuhiro Sera (@seratch)
  - 実務で使わないとしても追いかけてみてもよいのではないかと
 
 ---
-## 手を動かしながらどうぞ
+## ./skinny run で起動
 
 そろそろ話を聴いているだけは飽きてきた頃？
 
 デモアプリ、以下を実行して、動かしてみてください。
 
-http://localhost:8080/ にアクセスすると、懐かしいアレが・・！
+https://github.com/seratch/sa-struts-to-skinny
 
 ```
 git clone https://github.com/seratch/sa-struts-to-skinny.git
 
 cd sa-struts-to-skinny/skinny-tutorial
+
 ./skinny run
 ```
 
-本家もすぐ起動できるようにしておきました。
+http://localhost:8080/ にアクセスすると、懐かしいアレが・・！
+
+
+---
+## SAStruts Tutorial in Scala
+
+![Tutorial](https://cloud.githubusercontent.com/assets/19658/18804070/428b45b0-8231-11e6-87d4-bfc65f7f9154.png)
+
+---
+## 本家を mvn jetty:run
+
+別 port で本家も起動できるようにしておいたので見比べてみてください。
 
 ```
 cd sa-struts-to-skinny/sa-struts-tutorial
+
 mvn jetty:run
 
 open http://localhost:8081/
 ```
 
+SAStruts Tutorial を使った移行例については後半詳しく触れます。
+
 ---
-## 年表
+## ちょっとした年表
 
 |年|起きたこと|
 |---|---|
@@ -102,7 +117,7 @@ open http://localhost:8081/
 - 私自身: S2 休止後は Rails、Jersey、Spring MVC などを使っていた
 
 - Scala での Web サーバサイド
- - 一昔前は Lift が有名だった
+ - 一昔前は [Lift](http://www.liftweb.net/) が有名だった
  - 2012 年 Java だった Play が突如 v2 から Scala になった
  - Play 1 は Java on Rails だった
  - Play 2 はある程度 Rails っぽい見た目の別もの
@@ -117,10 +132,10 @@ open http://localhost:8081/
 
 - 今年 [Scala Center](https://scala.epfl.ch/) 発足
  - Lightbend（旧 Typesafe）と連携してエコシステムの拡大
- - IBM、Verizon、Goldman Sachs等の他の企業もスポンサードする体制
+ - IBM, Verizon, Goldman Sachs 等の他の企業もスポンサードする体制
 
 - 今では Twitter だけでなく多くの企業が使っている
- - http://www.lightbend.com/resources/case-studies-and-stories
+ - [Lightbend 社 case study](http://www.lightbend.com/resources/case-studies-and-stories)
  - Twitter、Walmart、Intel、SAMSUNG、LinkedIn、Coursera、The Guardian、Databricks、The Huffington Post、airbnb、etc..
  - ドワンゴさんでは[新卒教育で Scala エンジニアに](https://dwango.github.io/scala_text/)
 
@@ -128,13 +143,14 @@ open http://localhost:8081/
 ## Skinny
 
 - 非同期処理を前提としない Scala
- - 敷居を下げたい
- - 全部を Scala らしく書くより Java のコードを流用したい
+ - Future が標準 API になったのは割と最近（2.10）
+ - それ以外の用途にも使える言語だったはず
+ - Java コードを流用する > 全てを Scala らしく書く
 
 - Scala on Rails
+ - 普通の CRUD 画面的なものを手軽に作る手段がない
  - 界隈にそれ**も**欲している人は少なくないように見えた
- - 普通の CRUD 画面的なもの
- - scaffold とかしたい
+ - それがハマるときは scaffold とかしたい
 
 - 2013 年秋頃着手し、2014 年春に Skinny 1.0 release
 
@@ -154,7 +170,9 @@ class: center, middle
 
 - Mac なら `brew install skinny`
 
-- Linux や Windows は zip 解凍で
+- Linux や Windows は、[公式サイト](http://skinny-framework.org/)にある skinny-blank-app-with-deps.zip を解凍
+
+![button](http://skinny-framework.org/images/blank-app-with-deps-download.png)
 
 ---
 ## Installation Tips
@@ -194,7 +212,7 @@ skinny run
 http://localhost:8080/ にアクセスする
 
 ---
-## Demo 1: IDE Settings
+## IDE Settings
 
 IntelliJ IDEA ならプロジェクトのディレクトリを指定して開くだけ。
 
@@ -218,9 +236,34 @@ controller のコードとルーティング設定を自動生成
 ./skinny g controller hello
 ```
 
-http://localhost:8080/hello にアクセスすると未作成の view が自動生成される
+以下のようにファイルが生成されます。
 
-その src/main/webapp/WEB-INF/views/hello/index.html.ssp を編集して「Hello World」を表示させる
+```
+[info] Running TaskRunner generate:controller hello
+
+ *** Skinny Generator Task ***
+
+  "src/main/scala/controller/ApplicationController.scala" skipped.
+  "src/main/scala/controller/HelloController.scala" created.
+  "src/main/scala/controller/Controllers.scala" modified.
+  "src/test/scala/controller/HelloControllerSpec.scala" created.
+  "src/test/scala/integrationtest/HelloController_IntegrationTestSpec.scala" created.
+```
+
+---
+## Demo 1: New Controller
+
+```
+class HelloController extends ApplicationController {
+  protectFromForgery()
+
+  def index = render("/hello/index")
+}
+```
+
+dev モードで http://localhost:8080/hello にアクセスすると未作成の view（/hello/index）が自動生成されます。
+
+その `src/main/webapp/WEB-INF/views/hello/index.html.ssp` を編集して「Hello World」を表示させましょう。
 
 ```
 git add . -v
@@ -237,11 +280,33 @@ git commit -m'Add /hello'
   deadline:Option[LocalDate]
 ```
 
-たくさんファイルが生成されるので差分を見てみます。
+以下のようにファイルが生成されます。MVC ソースコード、ルーティング設定、DB マイグレーション、国際化用メッセージとテストコードです。
+
+```
+*** Skinny Generator Task ***
+
+ "src/main/resources/messages.conf" modified.
+ "src/main/resources/db/migration/V20160924084655__Create_tasks_table.sql" created.
+ "src/main/scala/controller/TasksController.scala" created.
+ "src/main/scala/controller/Controllers.scala" modified.
+ "src/main/scala/model/Task.scala" created.
+ "src/main/webapp/WEB-INF/views/tasks/_form.html.ssp" created.
+ "src/main/webapp/WEB-INF/views/tasks/new.html.ssp" created.
+ "src/main/webapp/WEB-INF/views/tasks/edit.html.ssp" created.
+ "src/main/webapp/WEB-INF/views/tasks/index.html.ssp" created.
+ "src/main/webapp/WEB-INF/views/tasks/show.html.ssp" created.
+ "src/test/resources/factories.conf" modified.
+ "src/test/scala/controller/TasksControllerSpec.scala" created.
+ "src/test/scala/integrationtest/TasksController_IntegrationTestSpec.scala" created.
+ "src/test/scala/model/TaskSpec.scala" created.
+```
+
+---
+## Demo 1: Scaffold
 
 ```
 git add . -v
-git diff --cached
+git commit -m'Add tasks scaffold'
 ```
 
 この時点で http://localhost:8080/tasks にアクセスするとまだテーブルがないのでエラーになります。
@@ -250,8 +315,30 @@ git diff --cached
 ./skinny db:migrate
 ```
 
-DB migration してから http://localhost:8080/tasks にアクセスすると [Bootstrap](http://getbootstrap.com/) ベースの CRUD 画面が自動生成されています。
+db:migrate したあとで　http://localhost:8080/tasks にアクセスすると [Bootstrap](http://getbootstrap.com/) ベースの CRUD 画面が自動生成されています。
+
+![CRUD](https://cloud.githubusercontent.com/assets/19658/18804333/5f56930e-8234-11e6-9d96-b87282c39966.png)
+
+---
+## Demo 1: Scaffold
+
 入力バリデーションが型に応じて自動生成されるなど、Rails よりも優れている点もあります。
+
+```
+override def createForm = validation(createParams,
+  paramKey("title") is required & maxLength(512),
+  paramKey("description") is maxLength(512),
+  paramKey("deadline") is dateFormat
+)
+
+override def updateFormStrongParameters = Seq(
+  "title" -> ParamType.String,
+  "description" -> ParamType.String,
+  "deadline" -> ParamType.LocalDate
+)
+```
+
+override がついている通り scaffold で生成されるコードは差分プログラミングで必要なところだけカスタマイズできるようになっています。
 
 ---
 ## Demo 1: Running Tests
@@ -276,8 +363,6 @@ skinny コマンドは sbt の薄いラッパーなので sbt と連携してい
 
 [公式サイト](http://skinny-framework.org/) を見ればどのような機能があるかはわかります。
 
-まずは Getting Started、Scaffolding あたりから。
-
 主要な機能としては
 
 - Web MVC (Routes, Form Validation, View Template)
@@ -299,7 +384,7 @@ class: center, middle
 ---
 ## Demo 2: Reverse Scaffolding
 
-すでに存在するデータベースからコードを自動生成できます。migration ファイルを規約に沿って生成。
+すでに存在するデータベースからコードを自動生成できます。まず migration ファイルを [Flyway](https://flywaydb.org/) の命名規約に沿って生成。
 
 ```
 ./skinny g migration reverse-demo
@@ -311,7 +396,7 @@ class: center, middle
 pbpaste > src/main/resources/db/migration/*__reverse-demo.sql
 ```
 
-DB に DDL を反映します。
+DB に DDL を反映してテーブルを準備します。
 
 ```
 ./skinny db:migrate
@@ -326,7 +411,7 @@ git add . -v && git commit -m'Add reverse-scaffold demo'
 ```
 
 ---
-## Demo 2: FK があればベター
+## Demo 2: FK があれば association も作る
 
 先ほどの公式ドキュメントの例のように外部キーが適切に指定された例であれば association の設定もついた状態で DAO が生成されます。
 
@@ -351,7 +436,7 @@ Scala は REPL が昔から充実しています。sbt を使えば、依存ラ�
 ./skinny console
 ```
 
-以下のような DAO のメソッドを実行してみましょう。レコードが生成されます。
+以下のような DAO のメソッドを実行してみると、レコードが生成されます。Rails console と同じような使い勝手でコードを簡単に試せます。
 
 ```
 Organization.createWithAttributes(
@@ -415,7 +500,7 @@ Scala 初見でも Java の方なら何となくわかるはず。
 ---
 ## Demo 3: SAStruts Tutorial 雑感
 
-- [sa.css](https://github.com/seratch/sa-struts-to-skinny/blob/master/skinny-tutorial/src/main/webapp/assets/css/sa.css) すごくシンプルなんだけど、なんか味ありますよね
+- [sa.css](https://github.com/seratch/sa-struts-to-skinny/blob/master/skinny-tutorial/src/main/webapp/assets/css/sa.css) すごくシンプルなんだけど、なんだか味がありますね
 
 - SAStruts の良さ
  - Rails 的な `mapItems[0].id` みたいなパラメータのサポート
@@ -430,12 +515,213 @@ Scala 初見でも Java の方なら何となくわかるはず。
 - tutorial 完コピできてない箇所あったら pull request ください・・！
 
 ---
+## Demo 3: Add (SAStruts)
+
+```
+public class AddForm {
+
+  @Required @IntegerType
+  public String arg1;
+
+  @Required @IntegerType
+  public String arg2;
+}
+
+public class AddAction {
+
+  public Integer result;
+
+  @Resource @ActionForm
+  protected AddForm addForm;
+
+  @Execute(validator = false)
+  public String index() {
+    return "index.jsp";
+  }
+
+  @Execute(input = "index.jsp")
+  public String submit() {
+    result = Integer.valueOf(addForm.arg1) + Integer.valueOf(addForm.arg2);
+    return "index.jsp";
+  }
+}
+```
+
+---
+## Demo 3: Add (Skinny)
+
+```
+class AddController extends ApplicationController {
+
+  def addForm = validation(
+    Params(params),
+    paramKey("arg1") is required & intValue,
+    paramKey("arg2") is required & intValue
+  )
+
+  def index = render("/add/index")
+
+  def submit = {
+    if (addForm.validate()) {
+      val result = params("arg1").toInt + params("arg2").toInt
+      set("result" -> Some(result))
+    }
+    render("/add/index")
+  }
+}
+```
+
+---
+## Demo 3: Ajax (SAStruts)
+
+SAStruts は jsp のファイル名を返すか ResponseUtil で応答します。
+
+```
+public class AjaxAction {
+
+  @Execute(validator = false)
+  public String index() {
+    return "index.jsp";
+  }
+
+  @Execute(validator = false)
+  public String hello() {
+    ResponseUtil.write("こんにちは");
+    return null;
+  }
+}
+```
+
+---
+## Demo 3: Ajax (Skinny)
+
+Skinny はメソッドが任意のものを返すとそれを response body として応答します。
+render は HTML/JSON/XML をよしなに判断して Content-Type を設定しつつ String で body を返します（ここでは HTML）。
+
+```
+class AjaxController extends ApplicationController {
+
+  def index = render("/ajax/index")
+
+  def hello = "こんにちは"
+}
+```
+
+ActionResult でレスポンス全体を表現したものを組み立てることもできます。
+
+```
+def hello: ActionResult = Ok(
+  body = "こんにちは",
+  headers = Map("X-Response-Time" -> 50)
+)
+```
+
+---
+## Demo 3: NestedForeach (SAStruts)
+
+SAStruts は public field で view に引き渡すものを表現します。
+
+```
+public class NestedForeachAction {
+
+  public List<List<Map<String, Object>>> mapItemsItems
+    = new ArrayList<List<Map<String, Object>>>();
+
+  @Execute(validator = false)
+  public String index() {
+    for (int i = 0; i < 10; i++) {
+      List<Map<String, Object>> mapItems = new ArrayList<Map<String, Object>>();
+      for (int j = 0; j < 2; j++) {
+      	Map<String, Object> m = new HashMap<String, Object>();
+      	m.put("id", i * 10 + j);
+      	m.put("name", "name" + i + j);
+      	mapItems.add(m);
+      }
+      mapItemsItems.add(mapItems);
+    }
+    return "index.jsp";
+  }
+}
+```
+
+---
+## Demo 3: NestedForeach (Skinny)
+
+Skinny は request scope に set する形で引き渡します。Map object の動的な attribute 生成はありません。case class で入れ物をつくってやりとりします。
+
+```
+case class ForeachItem(id: Int, name: String)
+
+class NestedForeachController extends ApplicationController {
+
+  private[this] val itemsSeq: Seq[Seq[ForeachItem]] = {
+    (0 until 10).map { i =>
+      (0 until 2).map { j =>
+        ForeachItem(i * 10 + j, s"name${i}${j}")
+      }
+    }
+  }
+
+  def index = {
+    set("itemsSeq" -> itemsSeq)
+    render("/nestedForeach/index")
+  }
+}
+```
+
+---
+## Demo 3: NestedForeach (SAStruts)
+
+説明不要な jsp の例です。
+
+```
+<%@page pageEncoding="UTF-8"%>
+
+<h1>Tutorial: Nested Foreach</h1>
+
+<table border="1">
+<c:forEach var="mapItems" items="${mapItemsItems}">
+    <tr>
+    <c:forEach var="m" items="${mapItems}">
+        <td>${f:h(m.id)}</td>
+        <td>${f:h(m.name)}</td>
+    </c:forEach>
+    </tr>
+</c:forEach>
+</table>
+```
+
+---
+## Demo 3: NestedForeach (Skinny)
+
+[ssp（Scala Server Pages）](https://scalate.github.io/scalate/documentation/ssp-reference.html)の例です。
+for 式さえ慣れればあとは Velocity に非常に似ているのですぐに使えると思います。
+Play には [twirl](https://www.playframework.com/documentation/2.5.x/ScalaTemplates) という別のテンプレートエンジンがあります。
+
+```
+<%@val itemsSeq: Seq[Seq[model.ForeachItem]] %>
+
+<h1>Tutorial: Nested Foreach</h1>
+
+<table border="1">
+#for (items <- itemsSeq)
+    <tr>
+    #for (m <- items)
+        <td>${m.id}</td>
+        <td>${m.name}</td>
+    #end
+    </tr>
+#end
+</table>
+```
+
+---
 ## まとめ
 
 - Seasar プロジェクト、本当にお疲れ様でした！
 
 - 私は今後も世界展開を目指して頑張ります
- - OSS も SmartNews も！
+ - OSS も SmartNews も
 
 - Scala 実際触ってみると良さがわかる感じがあります
  - 興味を持った方はこの週末ぜひ試してみてください
