@@ -180,7 +180,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   background-color: #D8D8D8;
-  color: #ced9e0;
+  color: #424242;
   font-family: "font-family: " Helvetica Neue ",Helvetica,Arial,sans-serif";
   font-size: 1em;
   line-height: 1.5; }
@@ -222,14 +222,14 @@ a {
   -webkit-transition: color 0.1s linear;
   -moz-transition: color 0.1s linear;
   transition: color 0.1s linear;
-  color: #ced9e0;
+  color: #424242;
   text-decoration: none; }
   a:hover {
-    color: #9fb5c2;
-    border-color: #9fb5c2; }
+    color: #1c1c1c;
+    border-color: #1c1c1c; }
   a:active, a:focus {
-    color: #9fb5c2;
-    border-color: #9fb5c2;
+    color: #1c1c1c;
+    border-color: #1c1c1c;
     outline: none; }
 
 header {
@@ -249,12 +249,12 @@ picture {
 
 blockquote {
   border-left: 2px solid #2E2E2E;
-  color: #fdfdfe;
+  color: #686868;
   margin: 1.5em 0;
   padding-left: 0.75em; }
 
 cite {
-  color: white;
+  color: #828282;
   font-style: italic; }
   cite:before {
     content: "\2014 \00A0"; }
@@ -264,7 +264,7 @@ body {
   padding-right: 1em; }
 
 a {
-  border-bottom: 1px solid #ced9e0; }
+  border-bottom: 1px solid #424242; }
 
 a:hover {
   color: #3B240B; }
@@ -444,7 +444,7 @@ header {
       display: block;
       margin-right: 2.35765%;
       width: 48.82117%;
-      border-top: 2px solid #ced9e0;
+      border-top: 2px solid #424242;
       padding-top: 1em;
       padding-bottom: 3em; }
       #content section.row .col:last-child, #content section.row .col-full:last-child {
